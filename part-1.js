@@ -2,20 +2,20 @@ const readlineSync = require('readline-sync');
 
 class CreateShip {
   constructor(size) {
-    this.location = this.generateLocation();
+    this.location = this.generateLocation(3);
     this.size = size;
   }
-  generateLocation() {
-    let letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  generateLocation(grid) {
+    let letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.slice(0,grid).split('');
     let randomLetter = letters[Math.floor(Math.random() * letters.length)];
-    let randomNumber = Math.floor(Math.random() * 10) + 1;
+    let randomNumber = Math.floor(Math.random() * grid) + 1;
     return randomLetter + randomNumber;
   }
 }
 
 class Battleship {
   constructor() {
-    this.ships = [new CreateShip(1), new CreateShip(1)];
+    this.ships = [1,1].map((item) => new CreateShip(item))
     this.guesses = [];
     this.remainingShips = this.ships.length;
   }
@@ -54,7 +54,7 @@ class Battleship {
 }
 
 console.log("Press any key to start the game.");
-readlineSync .question();
+readlineSync.question();
 
 const startGame = new Battleship();
 startGame.play();
